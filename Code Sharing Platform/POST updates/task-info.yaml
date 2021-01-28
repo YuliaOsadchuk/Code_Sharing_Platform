@@ -244,6 +244,20 @@ files:
         }
     }
   learner_created: false
+- name: src/platform/Response.java
+  visible: true
+  text: |
+    package platform;
+
+    public class Response {
+        String code = "public static void main(String[] args) {\n    " +
+                "SpringApplication.run(CodeSharingPlatform.class, args);\n}";
+
+        public String getCode() {
+            return code;
+        }
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/130/stages/693/implement#comment
 status: Unchecked
 record: -1
