@@ -4,3 +4,4 @@ content:
 - Seconds between two time points
 - Subtracting hours and adding minutes
 - The passed hours since the beginning of year
+- Whole hours between two date-time pairs
