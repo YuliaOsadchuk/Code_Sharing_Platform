@@ -3,3 +3,4 @@ content:
 - Return time without seconds
 - Seconds between two time points
 - Subtracting hours and adding minutes
+- The passed hours since the beginning of year
