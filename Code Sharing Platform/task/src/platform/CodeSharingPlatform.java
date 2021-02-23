@@ -6,28 +6,28 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 @RestController
 public class CodeSharingPlatform {
-    Response response = new Response();
+    List<Response> list = new ArrayList<>();
 
     public static void main(String[] args) {
         SpringApplication.run(CodeSharingPlatform.class, args);
     }
 
-    @GetMapping("/code")
-    public String getCode(HttpServletResponse servletResponse) {
+    @GetMapping("/code/{N}")
+    public String getCode(HttpServletResponse servletResponse, @PathVariable int N) {
         servletResponse.addHeader("Content-Type", "text/html");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        Response response = list.get(N - 1);
         return "<html>\n" +
                 "<head>\n" +
                 "    <title>Code</title>\n" +
@@ -41,13 +41,13 @@ public class CodeSharingPlatform {
                 "</html>";
     }
 
-    @GetMapping("/api/code")
-    public String getApiCode(HttpServletResponse servletResponse) throws JsonProcessingException {
+    @GetMapping("/api/code/{N}")
+    public String getApiCode(HttpServletResponse servletResponse, @PathVariable int N) throws JsonProcessingException {
         servletResponse.addHeader("Content-Type", "application/json");
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        return mapper.writeValueAsString(response);
+        return mapper.writeValueAsString(list.get(N - 1));
     }
 
     @GetMapping("/code/new")
@@ -90,10 +90,19 @@ public class CodeSharingPlatform {
 
     @PostMapping("/api/code/new")
     public String postApiCode(@RequestBody String s) {
-        s = s.substring(9, s.length() - 2);
-        response.setCode(s);
-        response.setDate(LocalDateTime.now());
-        return "{}";
+        list.add(new Response(s, LocalDateTime.now()));
+        return "{\"id\":" + list.size() + "\"}";
+    }
+
+    @GetMapping("/api/code/latest")
+    public List getApiCodeLatest() {
+        List<Response> responses = new ArrayList<>();
+        int lastElement = list.size() - 1;
+        int tenFromEnd = list.size() > 10 ? list.size() - 10 : 0;
+        for (int i = lastElement; i >= tenFromEnd; i--) {
+            responses.add(list.get(i));
+        }
+        return responses;
     }
 
 

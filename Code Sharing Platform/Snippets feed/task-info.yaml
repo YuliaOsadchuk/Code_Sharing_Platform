@@ -413,6 +413,94 @@ files:
         }
     }
   learner_created: false
+- name: src/platform/GetCode.html
+  visible: true
+  text: |-
+    <html>
+        <head>
+        <title>Code</title>
+        </head>
+
+        <body>
+            <pre style = "background-color: gray">response.getCode()</pre>
+        </body>
+    </html>
+  learner_created: true
+- name: src/platform/postApiCode.html
+  visible: true
+  text: |-
+    <html>
+    <head>
+        <title>Create</title>
+        <script>function send() {
+        let object = {
+            "code": document.getElementById("code_snippet").value
+        };
+
+        let json = JSON.stringify(object);
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", '/api/code/new', false)
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        xhr.send(json);
+
+        if (xhr.status == 200) {
+          alert("Success!");
+        }
+    }
+        </script>
+    </head>
+
+    <body>
+    <form action="" method="post">
+        <p>
+            <textarea textarea id="code_snippet">
+            </textarea>
+        </p>
+        <p>
+            <button id="send_snippet" type="submit" onclick="send()">Submit</button>
+        </p>
+    </form>
+    </body>
+    </html>
+  learner_created: true
+- name: src/platform/Response.java
+  visible: true
+  text: |
+    package platform;
+
+    import com.fasterxml.jackson.annotation.JsonFormat;
+
+    import java.time.LocalDateTime;
+
+    public class Response {
+        private String code = "public static void main(String[] args) {\n    " +
+                "SpringApplication.run(CodeSharingPlatform.class, args);\n}";
+
+        LocalDateTime date = LocalDateTime.now();
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            code = code.replaceAll("\\{\"\"code\":","");
+            this.code = code;
+        }
+
+        public void setDate(LocalDateTime date) {
+            this.date = date;
+        }
+
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        public LocalDateTime getDate() {
+            return date;
+        }
+    }
+  learner_created: true
+- name: src/platform/GetCodeLatest.html
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/130/stages/694/implement#comment
 status: Unchecked
 record: -1
