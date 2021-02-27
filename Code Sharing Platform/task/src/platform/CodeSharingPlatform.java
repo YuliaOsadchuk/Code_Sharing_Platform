@@ -1,5 +1,6 @@
 package platform;
 
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -89,9 +90,13 @@ public class CodeSharingPlatform {
     }
 
     @PostMapping("/api/code/new")
-    public String postApiCode(@RequestBody String s) {
-        list.add(new Response(s, LocalDateTime.now()));
-        return "{\"id\":" + list.size() + "\"}";
+    public String postApiCode(@RequestBody String s) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Response response = objectMapper.readValue(s, Response.class);
+        response.setDate(LocalDateTime.now());
+        response.setId(list.size() + 1);
+        list.add(response);
+        return "{\"id\":" + response.getId() + "\"}";
     }
 
     @GetMapping("/api/code/latest")

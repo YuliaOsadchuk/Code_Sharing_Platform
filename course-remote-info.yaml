@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/405256/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Tue, 23 Feb 2021 13:21:39 UTC
+update_date: Sat, 27 Feb 2021 14:04:38 UTC
 stages:
 - id: 692
   step: 11027
@@ -22,14 +22,6 @@ stages:
   is_completed: false
 topics:
   0:
-  - title: Introduction to Spring Boot
-    theory_id: 7944
-  - title: Getting started with Spring Boot
-    theory_id: 6336
-  - title: Basic project structure
-    theory_id: 6339
-  - title: Rest controller
-    theory_id: 7015
   - title: Immutability
     theory_id: 7929
   - title: Units of information
@@ -70,10 +62,16 @@ topics:
     theory_id: 7536
   - title: HTML page structure
     theory_id: 6491
+  - title: Introduction to Spring boot
+    theory_id: 7944
   - title: Write, compile, and run
     theory_id: 3739
   - title: JVM, JRE, and JDK
     theory_id: 3499
+  - title: Getting started with Spring Boot
+    theory_id: 6336
+  - title: Basic project structure
+    theory_id: 6339
   - title: What is an exception
     theory_id: 3497
   - title: NPE
@@ -84,6 +82,8 @@ topics:
     theory_id: 3770
   - title: ArrayList
     theory_id: 3567
+  - title: Rest controller
+    theory_id: 7015
   - title: Introduction to OOP
     theory_id: 3614
   - title: External resources
@@ -100,6 +100,8 @@ topics:
     theory_id: 3518
   - title: Comments
     theory_id: 3520
+  - title: Coding style conventions
+    theory_id: 12411
   - title: Naming variables
     theory_id: 3513
   - title: Scanning the input
@@ -183,8 +185,6 @@ topics:
   - title: Boxing and unboxing
     theory_id: 3595
   1:
-  - title: Passing JSON to server
-    theory_id: 7165
   - title: Block-level elements
     theory_id: 7271
   - title: Inline Elements
@@ -221,6 +221,8 @@ topics:
     theory_id: 8388
   - title: Postman
     theory_id: 8512
+  - title: Passing JSON to server
+    theory_id: 7165
   - title: LocalDate
     theory_id: 3592
   - title: LocalTime
@@ -228,8 +230,6 @@ topics:
   - title: LocalDateTime
     theory_id: 3617
   2:
-  - title: Beans and components
-    theory_id: 7353
   - title: Absolute units
     theory_id: 10605
   - title: Relative units
@@ -238,9 +238,9 @@ topics:
     theory_id: 8325
   - title: Margin and padding
     theory_id: 8346
+  - title: Beans and components
+    theory_id: 7353
   3:
-  - title: CRUD Repositories
-    theory_id: 9536
   - title: Files
     theory_id: 6989
   - title: Introduction to databases
@@ -253,6 +253,8 @@ topics:
     theory_id: 8771
   - title: JPA Relationships
     theory_id: 8936
+  - title: CRUD Repositories
+    theory_id: 9536
   - title: Data and object mapping
     theory_id: 8262
   - title: Overloading
