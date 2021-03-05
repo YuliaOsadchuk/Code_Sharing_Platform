@@ -3,23 +3,12 @@ package platform;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Response {
-    int id;
+
     private String code;
-    LocalDateTime date;
-    /*public Response() {
-    }
-
-    public Response(String code) {
-        this.code = code;
-    }
-
-    public Response(String code, LocalDateTime date, int id) {
-        this.code = code;
-        this.date = date;
-        this.id = id;
-    }*/
+    private String date;
 
     public String getCode() {
         return code;
@@ -30,19 +19,11 @@ public class Response {
     }
 
     public void setDate(LocalDateTime date) {
-        this.date = date;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        this.date = date.format(formatter);
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }

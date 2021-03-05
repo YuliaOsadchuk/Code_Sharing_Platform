@@ -467,6 +467,344 @@ files:
         }
     }
   learner_created: false
+- name: src/platform/Main.java
+  visible: true
+  text: |
+    package platform;
+
+    import freemarker.template.Configuration;
+    import freemarker.template.Template;
+    import freemarker.template.TemplateException;
+
+    import java.io.IOException;
+    import java.io.OutputStreamWriter;
+    import java.io.Writer;
+    import java.util.HashMap;
+    import java.util.Map;
+
+    public class Main {
+
+        public static void main(String[] args) throws IOException, TemplateException {
+            Configuration configuration = new Configuration(Configuration.VERSION_2_3_30);
+            configuration.setClassForTemplateLoading(Main.class, "/templates");
+
+            Map<String, String> map = new HashMap<>();
+            map.put("varName", "kobaska");
+
+            Template template = configuration.getTemplate("test.ftl");
+
+            Writer consoleWriter = new OutputStreamWriter(System.out);
+            template.process(map, consoleWriter);
+        }
+    }
+  learner_created: true
+- name: src/platform/RestControllerClass.java
+  visible: true
+  text: |
+    package platform;
+
+    import com.fasterxml.jackson.core.JsonProcessingException;
+    import com.fasterxml.jackson.databind.ObjectMapper;
+    import com.fasterxml.jackson.databind.SerializationFeature;
+    import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+    import org.springframework.boot.autoconfigure.SpringBootApplication;
+    import org.springframework.web.bind.annotation.*;
+
+    import javax.servlet.http.HttpServletResponse;
+    import java.time.LocalDateTime;
+    import java.util.ArrayList;
+    import java.util.List;
+
+    @SpringBootApplication
+    @RestController
+    public class RestControllerClass {
+
+        public static List<Response> list = new ArrayList<>();
+
+        @GetMapping("/api/code/{N}")
+        public String getApiCode(HttpServletResponse servletResponse, @PathVariable("N") int n) throws JsonProcessingException {
+            servletResponse.addHeader("Content-Type", "application/json");
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            return mapper.writeValueAsString(list.get(n - 1));
+        }
+
+        @PostMapping("/api/code/new")
+        public String postApiCode(@RequestBody String s) throws JsonProcessingException {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Response response = objectMapper.readValue(s, Response.class);
+            response.setDate(LocalDateTime.now());
+            list.add(response);
+            return "{\"id\":\"" + list.size() + "\"}";
+        }
+
+        @GetMapping("/api/code/latest")
+        public List getApiCodeLatest() {
+            List<Response> responses = new ArrayList<>();
+            int lastElement = list.size() - 1;
+            int tenFromEnd = list.size() > 10 ? list.size() - 10 : 0;
+            for (int i = lastElement; i >= tenFromEnd; i--) {
+                responses.add(list.get(i));
+            }
+            return responses;
+        }
+
+        @GetMapping("/code/{N}")
+        public String getCode(HttpServletResponse servletResponse, @PathVariable int N) {
+            servletResponse.addHeader("Content-Type", "text/html");
+            Response response = RestControllerClass.list.get(N - 1);
+            return "<html>\n" +
+                    "<head>\n" +
+                    "    <title>Code</title>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "<span id=\"load_date\">" + response.getDate() + "</span>" +
+                    "    <pre id=\"code_snippet\">\n" +
+                    response.getCode() +
+                    "</pre>\n" +
+                    "</body>\n" +
+                    "</html>";
+        }
+
+        @GetMapping("/code/new")
+        public String postCode() {
+            return "<html>\n" +
+                    "<head>\n" +
+                    "    <title>Create</title>\n" +
+                    "    <script>function send() {\n" +
+                    "    let object = {\n" +
+                    "        \"code\": document.getElementById(\"code_snippet\").value\n" +
+                    "    };\n" +
+                    "    \n" +
+                    "    let json = JSON.stringify(object);\n" +
+                    "    \n" +
+                    "    let xhr = new XMLHttpRequest();\n" +
+                    "    xhr.open(\"POST\", '/api/code/new', false)\n" +
+                    "    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');\n" +
+                    "    xhr.send(json);\n" +
+                    "    \n" +
+                    "    if (xhr.status == 200) {\n" +
+                    "      alert(\"Success!\");\n" +
+                    "    }\n" +
+                    "}\n" +
+                    "    </script>\n" +
+                    "</head>\n" +
+                    "\n" +
+                    "<body>\n" +
+                    "<form action=\"\" method=\"post\">\n" +
+                    "    <p>\n" +
+                    "        <textarea textarea id=\"code_snippet\">\n" +
+                    "        </textarea>\n" +
+                    "    </p>\n" +
+                    "    <p>\n" +
+                    "        <button id=\"send_snippet\" type=\"submit\" onclick=\"send()\">Submit</button>\n" +
+                    "    </p>\n" +
+                    "</form>\n" +
+                    "</body>\n" +
+                    "</html>";
+        }
+
+
+    }
+  learner_created: true
+- name: src/resources/GetCode.html
+  visible: true
+  text: |-
+    <html>
+        <head>
+        <title>Code</title>
+        </head>
+
+        <body>
+            <pre style = "background-color: gray">response.getCode()</pre>
+        </body>
+    </html>
+  learner_created: true
+- name: src/platform/SpringWebConfig.java
+  visible: true
+  text: |
+    package platform;
+
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.context.annotation.ComponentScan;
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+    import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+    import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+    import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
+
+    @EnableWebMvc
+    @Configuration
+    @ComponentScan({"platform"})
+    public class SpringWebConfig extends WebMvcConfigurerAdapter {
+
+        @Bean
+        public FreeMarkerViewResolver freemarkerViewResolver() {
+            FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
+            resolver.setCache(true);
+            resolver.setPrefix("");
+            resolver.setSuffix(".ftl");
+            return resolver;
+        }
+
+        @Bean
+        public FreeMarkerConfigurer freemarkerConfig() {
+            FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
+            freeMarkerConfigurer.setTemplateLoaderPath("classpath:templates");
+            return freeMarkerConfigurer;
+        }
+    }
+  learner_created: true
+- name: src/resources/GetCodeLatest.html
+  visible: true
+  text: |-
+    <html>
+    <head>
+        <title>Latest</title>
+    </head>
+
+    <body>
+    <#list model ["responses"] as list>
+        <span>
+            ${list.date}
+        </span>
+        <pre  style="background-color: gray">${list.code}</pre>
+    </#list>
+    </body>
+    </html>
+  learner_created: true
+- name: src/platform/Response.java
+  visible: true
+  text: |
+    package platform;
+
+    import com.fasterxml.jackson.annotation.JsonFormat;
+
+    import java.time.LocalDateTime;
+    import java.time.format.DateTimeFormatter;
+
+    public class Response {
+
+        private String code;
+        private String date;
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public void setDate(LocalDateTime date) {
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            this.date = date.format(formatter);
+        }
+
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        public String getDate() {
+            return date;
+        }
+    }
+  learner_created: true
+- name: src/resources/templates/GetCodeLatest.ftl
+  visible: true
+  text: |-
+    <html>
+    <head>
+        <title>Latest</title>
+    </head>
+
+    <body>
+    <#list model ["responses"] as list>
+        <span>
+            ${list.date}
+        </span>
+        <pre  style="background-color: gray">${list.code}</pre>
+    </#list>
+    </body>
+    </html>
+  learner_created: true
+- name: src/resources/templates/GetCode.ftl
+  visible: true
+  learner_created: true
+- name: src/resources/postApiCode.html
+  visible: true
+  text: |-
+    <html>
+    <head>
+        <title>Create</title>
+        <script>function send() {
+        let object = {
+            "code": document.getElementById("code_snippet").value
+        };
+
+        let json = JSON.stringify(object);
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", '/api/code/new', false)
+        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        xhr.send(json);
+
+        if (xhr.status == 200) {
+          alert("Success!");
+        }
+    }
+        </script>
+    </head>
+
+    <body>
+    <form action="" method="post">
+        <p>
+            <textarea textarea id="code_snippet">
+            </textarea>
+        </p>
+        <p>
+            <button id="send_snippet" type="submit" onclick="send()">Submit</button>
+        </p>
+    </form>
+    </body>
+    </html>
+  learner_created: true
+- name: src/resources/templates/PostCode.ftl
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/130/stages/695/implement#comment
-status: Unchecked
-record: -1
+status: Failed
+feedback:
+  message: |-
+    Wrong answer in test #4
+
+    Can&#39;t determine if code highlighting works or not.
+    Use &quot;hljs.initHighlightingOnLoad()&quot; inside the script tags in the HTML page.
+
+    Please find below the output of your program during this failed test.
+
+    ---
+
+
+      .   ____          _            __ _ _
+     /\\ / ___&#39;_ __ _ _(_)_ __  __ _ \ \ \ \
+    ( ( )\___ | &#39;_ | &#39;_| | &#39;_ \/ _` | \ \ \ \
+     \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+      &#39;  |____| .__|_| |_|_| |_\__, | / / / /
+     =========|_|==============|___/=/_/_/_/
+     :: Spring Boot ::        (v2.3.3.RELEASE)
+
+    2021-03-06 00:02:03.617  INFO 7484 --- [    Test worker] platform.CodeSharingPlatform             : Starting CodeSharingPlatform on DESKTOP-CS57S1L with PID 7484 (started by Yulia in D:\Projects\IntelliJ\Code Sharing Platform\Code Sharing Platform\task)
+    2021-03-06 00:02:03.622  INFO 7484 --- [    Test worker] platform.CodeSharingPlatform             : No active profile set, falling back to default profiles: default
+    2021-03-06 00:02:05.483  INFO 7484 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8889 (http)
+    2021-03-06 00:02:05.511  INFO 7484 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+    2021-03-06 00:02:05.512  INFO 7484 --- [    Test worker] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.37]
+    2021-03-06 00:02:05.683  INFO 7484 --- [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+    2021-03-06 00:02:05.683  INFO 7484 --- [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1966 ms
+    2021-03-06 00:02:06.918  INFO 7484 --- [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path &#39;/actuator&#39;
+    2021-03-06 00:02:07.005  INFO 7484 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8889 (http) with context path &#39;&#39;
+    2021-03-06 00:02:07.035  INFO 7484 --- [    Test worker] platform.CodeSharingPlatform             : Started CodeSharingPlatform in 3.978 seconds (JVM running for 5.308)
+    2021-03-06 00:02:07.619  INFO 7484 --- [nio-8889-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet &#39;dispatcherServlet&#39;
+    2021-03-06 00:02:07.621  INFO 7484 --- [nio-8889-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet &#39;dispatcherServlet&#39;
+    2021-03-06 00:02:07.636  INFO 7484 --- [nio-8889-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 14 ms
+  time: Fri, 05 Mar 2021 22:02:09 UTC
+record: 4

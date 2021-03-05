@@ -17,7 +17,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     compile("org.springframework.boot:spring-boot-starter-web")
-    //compile 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.7'
     implementation 'org.springframework.boot:spring-boot-starter-freemarker'
 }

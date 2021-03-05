@@ -413,19 +413,6 @@ files:
         }
     }
   learner_created: false
-- name: src/platform/GetCode.html
-  visible: true
-  text: |-
-    <html>
-        <head>
-        <title>Code</title>
-        </head>
-
-        <body>
-            <pre style = "background-color: gray">response.getCode()</pre>
-        </body>
-    </html>
-  learner_created: true
 - name: src/platform/postApiCode.html
   visible: true
   text: |-
@@ -498,9 +485,37 @@ files:
         }
     }
   learner_created: true
-- name: src/platform/GetCodeLatest.html
+- name: src/resources/GetCode.html
+  visible: true
+  text: |-
+    <html>
+        <head>
+        <title>Code</title>
+        </head>
+
+        <body>
+            <pre style = "background-color: gray">response.getCode()</pre>
+        </body>
+    </html>
+  learner_created: true
+- name: src/resources/GetCodeLatest.html
+  visible: true
+  learner_created: true
+- name: src/resources/templates/test.ftl
+  visible: true
+  learner_created: true
+- name: src/platform/Main.java
+  visible: true
+  learner_created: true
+- name: src/platform/SpringWebConfig.java
+  visible: true
+  learner_created: true
+- name: src/platform/RestControllerClass.java
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/projects/130/stages/694/implement#comment
-status: Unchecked
-record: -1
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Wed, 03 Mar 2021 19:51:48 UTC
+record: 3
