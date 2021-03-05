@@ -467,37 +467,6 @@ files:
         }
     }
   learner_created: false
-- name: src/platform/Main.java
-  visible: true
-  text: |
-    package platform;
-
-    import freemarker.template.Configuration;
-    import freemarker.template.Template;
-    import freemarker.template.TemplateException;
-
-    import java.io.IOException;
-    import java.io.OutputStreamWriter;
-    import java.io.Writer;
-    import java.util.HashMap;
-    import java.util.Map;
-
-    public class Main {
-
-        public static void main(String[] args) throws IOException, TemplateException {
-            Configuration configuration = new Configuration(Configuration.VERSION_2_3_30);
-            configuration.setClassForTemplateLoading(Main.class, "/templates");
-
-            Map<String, String> map = new HashMap<>();
-            map.put("varName", "kobaska");
-
-            Template template = configuration.getTemplate("test.ftl");
-
-            Writer consoleWriter = new OutputStreamWriter(System.out);
-            template.process(map, consoleWriter);
-        }
-    }
-  learner_created: true
 - name: src/platform/RestControllerClass.java
   visible: true
   text: |
@@ -729,44 +698,6 @@ files:
   learner_created: true
 - name: src/resources/templates/GetCode.ftl
   visible: true
-  learner_created: true
-- name: src/resources/postApiCode.html
-  visible: true
-  text: |-
-    <html>
-    <head>
-        <title>Create</title>
-        <script>function send() {
-        let object = {
-            "code": document.getElementById("code_snippet").value
-        };
-
-        let json = JSON.stringify(object);
-
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", '/api/code/new', false)
-        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-        xhr.send(json);
-
-        if (xhr.status == 200) {
-          alert("Success!");
-        }
-    }
-        </script>
-    </head>
-
-    <body>
-    <form action="" method="post">
-        <p>
-            <textarea textarea id="code_snippet">
-            </textarea>
-        </p>
-        <p>
-            <button id="send_snippet" type="submit" onclick="send()">Submit</button>
-        </p>
-    </form>
-    </body>
-    </html>
   learner_created: true
 - name: src/resources/templates/PostCode.ftl
   visible: true
