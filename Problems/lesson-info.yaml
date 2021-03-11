@@ -6,3 +6,4 @@ content:
 - The passed hours since the beginning of year
 - Whole hours between two date-time pairs
 - Implement a default method
+- Add new default method
