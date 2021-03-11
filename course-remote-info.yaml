@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/405256/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Fri, 05 Mar 2021 19:40:36 UTC
+update_date: Thu, 11 Mar 2021 11:36:47 UTC
 stages:
 - id: 692
   step: 11027
@@ -22,8 +22,6 @@ stages:
   is_completed: false
 topics:
   0:
-  - title: Introduction to Scala
-    theory_id: 8945
   - title: Immutability
     theory_id: 7929
   - title: Units of information
@@ -118,16 +116,28 @@ topics:
     theory_id: 3507
   - title: Switch statement
     theory_id: 3504
-  - title: Introduction to Kotlin
-    theory_id: 4350
-  - title: Frameworks
-    theory_id: 6701
+  - title: Write, compile, and run
+    theory_id: 3739
+  - title: JVM, JRE, and JDK
+    theory_id: 3499
+  - title: Errors in programs
+    theory_id: 3536
+  - title: What is an exception
+    theory_id: 3497
+  - title: NPE
+    theory_id: 1945
+  - title: Build tools
+    theory_id: 4284
   - title: JSON
     theory_id: 6854
   - title: Sizes and ranges
     theory_id: 3532
   - title: Type casting
     theory_id: 3510
+  - title: Libraries
+    theory_id: 8504
+  - title: Frameworks
+    theory_id: 6701
   - title: Calling a method
     theory_id: 10973
   - title: Declaring a method
@@ -150,18 +160,6 @@ topics:
     theory_id: 3801
   - title: IDEA Basics
     theory_id: 5819
-  - title: Write, compile, and run
-    theory_id: 3739
-  - title: JVM, JRE, and JDK
-    theory_id: 3499
-  - title: Errors in programs
-    theory_id: 3536
-  - title: What is an exception
-    theory_id: 3497
-  - title: NPE
-    theory_id: 1945
-  - title: Build tools
-    theory_id: 4284
   - title: Java Archive
     theory_id: 4311
   - title: Gradle basics
@@ -209,6 +207,8 @@ topics:
     theory_id: 6560
   - title: Comments
     theory_id: 7730
+  - title: Passing JSON to server
+    theory_id: 7165
   - title: Border
     theory_id: 8355
   - title: Introduction to JavaScript
@@ -227,8 +227,6 @@ topics:
     theory_id: 8388
   - title: Postman
     theory_id: 8512
-  - title: Passing JSON to server
-    theory_id: 7165
   - title: LocalDate
     theory_id: 3592
   - title: LocalTime
@@ -236,6 +234,8 @@ topics:
   - title: LocalDateTime
     theory_id: 3617
   2:
+  - title: Beans and components
+    theory_id: 7353
   - title: Absolute units
     theory_id: 10605
   - title: Relative units
@@ -244,8 +244,6 @@ topics:
     theory_id: 8325
   - title: Margin and padding
     theory_id: 8346
-  - title: Beans and components
-    theory_id: 7353
   3:
   - title: Files
     theory_id: 6989

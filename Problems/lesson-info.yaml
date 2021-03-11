@@ -5,3 +5,4 @@ content:
 - Subtracting hours and adding minutes
 - The passed hours since the beginning of year
 - Whole hours between two date-time pairs
+- Implement a default method
