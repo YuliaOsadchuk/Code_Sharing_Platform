@@ -7,8 +7,11 @@ import java.util.stream.Collectors;
 class CollectionUtils {
 
     public static Collection<Integer> pow2(Collection<Integer> numbers) {
-        // write your code here
-        return numbers;
+        Collection<Integer> collection = new ArrayList<>();
+        for (int i : numbers) {
+            collection.add(i * i);
+        }
+        return collection;
     }
 }
 
