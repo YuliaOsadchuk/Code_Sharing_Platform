@@ -16,7 +16,7 @@ class Main {
         holder.set(256);
 
         // correct the line to make the code compiled
-        Integer value = holder.get();
+        Integer value = (Integer) holder.get();
 
         // do not change
         System.out.println(value);
