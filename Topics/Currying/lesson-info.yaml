@@ -2,3 +2,5 @@ content:
 - Theory
 - Curried function
 - Reducer operator
+- Multifunctional mapper
+- String concatenation
