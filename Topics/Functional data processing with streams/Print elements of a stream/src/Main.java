@@ -10,7 +10,7 @@ public class Main {
      * @param stream the input stream of integers
      */
     public static void printStream(Stream<Integer> stream) {
-        // write your code here
+        stream.skip(2).forEach(System.out::println);
     }
 
     // Don't change the code below
