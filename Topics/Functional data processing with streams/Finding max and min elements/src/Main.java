@@ -10,6 +10,7 @@ class MinMax {
             Comparator<? super T> order,
             BiConsumer<? super T, ? super T> minMaxConsumer) {
 
-        // your implementation here
+        List<? extends T> list = stream.collect(Collectors.toList());
+        minMaxConsumer.accept(list.stream().min(order).orElse(null), list.stream().max(order).orElse(null));
     }
 }
