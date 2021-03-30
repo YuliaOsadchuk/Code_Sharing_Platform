@@ -13,5 +13,8 @@ files:
     \\\\s+\"))));\n    }\n}"
   learner_created: false
 feedback_link: https://hyperskill.org/learn/step/10236#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Tue, 30 Mar 2021 11:21:42 UTC
 record: -1
