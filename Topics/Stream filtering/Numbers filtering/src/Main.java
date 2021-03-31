@@ -6,7 +6,7 @@ import java.util.stream.*;
 class EvenAndOddFilter {
 
     public static IntStream createFilteringStream(IntStream evenStream, IntStream oddStream) {
-        return // write your stream here
+        return IntStream.concat(evenStream, oddStream).sorted().filter(x -> x % 3 == 0 && x % 5 == 0).skip(2);
     }
 
     // Don't change the code below
