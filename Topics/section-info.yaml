@@ -6,3 +6,4 @@ content:
 - The Set interface
 - Functional data processing with streams
 - Stream filtering
+- Map and flatMap
