@@ -7,7 +7,7 @@ import java.util.stream.*;
 public class Main {
 
     private static Stream<String> omitLongStrings(List<String> strings) {
-        // write your code here
+        return strings.stream().filter(x -> x.length() < 4);
     }
 
     public static void main(String[] args) throws IOException {
