@@ -3,3 +3,4 @@ content:
 - Omitting long strings
 - Numbers filtering
 - Bad words detecting
+- Check if a number is prime
