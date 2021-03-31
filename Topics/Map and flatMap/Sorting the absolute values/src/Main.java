@@ -11,7 +11,7 @@ public class Main {
      * @return the sorted array of integer absolute numbers
      */
     public static int[] sortedAbsNumbers(String[] numbers) {
-        // write your code here
+        return Arrays.stream(numbers).mapToInt(x->Math.abs(Integer.parseInt(x))).sorted().toArray();
     }
 
     // Don't change the code below
